@@ -20,4 +20,6 @@
 
     <!--  Main  -->
     <string name="btn1">テスト</string>
+    <!--  MainFragment  -->
+    <string name="chart_heart_beat">ChartHeartBeat</string>
 </resources>

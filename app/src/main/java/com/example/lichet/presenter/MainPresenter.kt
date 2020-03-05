@@ -1,7 +1,7 @@
 package com.example.lichet.presenter
 
 import android.util.Log
-import com.example.lichet.view.MainView
+import com.example.lichet.view.main.MainView
 import com.example.lichet.di.scope.ActivityScope
 import com.example.lichet.exception.AppException
 import com.example.lichet.usecase.MainUseCase
@@ -50,9 +50,12 @@ class MainPresenter  @Inject constructor(
                 view.hideProgress()
                 view.showToast("結果をLogに出力")
                 heartBeats.forEach {heartBeat ->
-                    Log.i(TAG, heartBeat.time?:"null")
+                    Log.i(TAG, heartBeat.pnn_time)
                     Log.i(TAG, heartBeat.pnn?:"null")
                 }
+
+                view.relpaceFragment(heartBeats)
+
             },{
                 view.hideProgress()
                 if (it is AppException) {
