@@ -3,13 +3,14 @@ package com.example.lichet.view.main
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import com.example.lichet.R
-import com.example.lichet.api.response.HeartBeat
+import com.example.lichet.api.response.HeartBeatResponse
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -19,13 +20,13 @@ import kotlinx.android.synthetic.main.fragment_heart_beat.*
 
 class MainFragment: Fragment(), MainView.MainActivity.OnBackKeyPressedListener {
 
-    private var listHeartBeat: List<HeartBeat>? = null
+    private var listHeartBeatResponse: List<HeartBeatResponse>? = null
 
     // スタイルとフォントファミリーの設定
     private var mTypeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
 
-    fun newInstance(listHeartBeat: List<HeartBeat>): MainFragment{
-        this.listHeartBeat = listHeartBeat
+    fun newInstance(listHeartBeatResponse: List<HeartBeatResponse>): MainFragment{
+        this.listHeartBeatResponse = listHeartBeatResponse
         return this
     }
 
@@ -39,7 +40,7 @@ class MainFragment: Fragment(), MainView.MainActivity.OnBackKeyPressedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listHeartBeat?: return
+        listHeartBeatResponse?: return
 
         setupLineChart()
 
@@ -93,10 +94,10 @@ class MainFragment: Fragment(), MainView.MainActivity.OnBackKeyPressedListener {
     private fun lineData(): LineData {
         val values = mutableListOf<Entry>()
 
-        listHeartBeat?.forEach{
-            // 値はランダムで表示させる
-            val time = it.pnn_time.toFloat()
-            val pnn = it.pnn?.toFloat()?: 0f
+        listHeartBeatResponse?.forEachIndexed { index, heartBeat ->
+//            val time = heartBeat.pnn_time.toFloat()
+            val time = index*10.toFloat()
+            val pnn = heartBeat.pnn_data?.toFloat()?: 0f
             values.add(Entry(time, pnn))
         }
         val yValue = LineDataSet(values, getString(R.string.chart_heart_beat)).apply {

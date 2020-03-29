@@ -1,6 +1,7 @@
 package com.example.lichet.presenter
 
 import android.util.Log
+import com.example.lichet.api.request.HeartBeatRequest
 import com.example.lichet.view.main.MainView
 import com.example.lichet.di.scope.ActivityScope
 import com.example.lichet.exception.AppException
@@ -15,7 +16,7 @@ class MainPresenter  @Inject constructor(
     private val schedulerProvider: SchedulerProvider,
     private val useCase: MainUseCase){
 
-    val TAG = MainPresenter::class.java.simpleName + ": "
+    val TAG = MainPresenter::class.java.simpleName
 
     var view: MainView? = null
     private set
@@ -43,15 +44,15 @@ class MainPresenter  @Inject constructor(
 
     private fun getHeartBeats(requestIndex: Int){
         val view = view?:return
-        useCase.getHeartBeats(1,1, requestIndex)
+        useCase.getHeartBeats(HeartBeatRequest(13, requestIndex))
             .doOnSubscribe { view.showProgress() }
             .observeOn(schedulerProvider.ui())
             .subscribe({heartBeats ->
                 view.hideProgress()
                 view.showToast("結果をLogに出力")
                 heartBeats.forEach {heartBeat ->
-                    Log.i(TAG, heartBeat.pnn_time)
-                    Log.i(TAG, heartBeat.pnn?:"null")
+                    Log.i(TAG, heartBeat.pnn_time.toString())
+                    Log.i(TAG, (heartBeat.pnn_data?:"null").toString())
                 }
 
                 view.relpaceFragment(heartBeats)

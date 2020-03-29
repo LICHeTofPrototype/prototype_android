@@ -1,8 +1,8 @@
 package com.example.lichet.api.response
 
-data class HeartBeat(
+data class HeartBeatResponse(
     var id: Int,
-    var pnn: String?,
-    var pnn_time: String,
+    var pnn_data: Float?,
+    var pnn_time: Float,
     var measurement: MeasureMent
 )

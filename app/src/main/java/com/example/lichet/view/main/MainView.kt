@@ -1,7 +1,6 @@
 package com.example.lichet.view.main
 
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,11 +10,10 @@ import androidx.navigation.ui.setupWithNavController
 import android.view.Menu
 import android.view.View
 import android.widget.ArrayAdapter
-import androidx.fragment.app.Fragment
 import com.example.lichet.BaseActivity
 import com.example.lichet.CustomApplication
 import com.example.lichet.R
-import com.example.lichet.api.response.HeartBeat
+import com.example.lichet.api.response.HeartBeatResponse
 import com.example.lichet.di.module.ActivityModule
 import com.example.lichet.presenter.MainPresenter
 import com.example.lichet.util.Const.Companion.TAG_BACK_PRESSED
@@ -28,7 +26,7 @@ interface MainView {
     fun showProgress()
     fun hideProgress()
     fun showToast(toastMessage: String)
-    fun relpaceFragment(listHeartBeat: List<HeartBeat>)
+    fun relpaceFragment(listHeartBeatResponse: List<HeartBeatResponse>)
 
     class MainActivity : BaseActivity(), MainView {
 
@@ -48,6 +46,8 @@ interface MainView {
             presenter.takeView(this)
 
             initView()
+
+            setSpinner()
         }
 
         private fun initView(){
@@ -70,25 +70,26 @@ interface MainView {
             setupActionBarWithNavController(navController, appBarConfiguration)
             nav_view.setupWithNavController(navController)
 
-            val spinnerAdapter = ArrayAdapter<Int>(this, android.R.layout.simple_spinner_item)
-            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            (0.. 99).toList().forEach {
-                spinnerAdapter.add(it)
-            }
-            spinner.adapter = spinnerAdapter
-
             btn.setOnClickListener {
                 val selectedValue = spinner.selectedItem as Int
                 presenter.onClickBtn(selectedValue)
             }
         }
 
-        override fun relpaceFragment(listHeartBeat: List<HeartBeat>){
-            val fragment = MainFragment().newInstance(listHeartBeat)
+        private fun setSpinner(){
+            val spinnerAdapter = ArrayAdapter<Int>(this, android.R.layout.simple_spinner_item)
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            (0.. 99).toList().forEach {
+                spinnerAdapter.add(it)
+            }
+            spinner.adapter = spinnerAdapter
+        }
+
+        override fun relpaceFragment(listHeartBeatResponse: List<HeartBeatResponse>){
+            val fragment = MainFragment().newInstance(listHeartBeatResponse)
             val fragmentManager = supportFragmentManager
             val trasnaction = fragmentManager.beginTransaction()
-            trasnaction.replace(R.id.heartBeatFragment, fragment, TAG_BACK_PRESSED)
-            trasnaction.commit()
+            trasnaction.replace(R.id.heartBeatFragment, fragment, TAG_BACK_PRESSED).commit()
 
             ll_select.visibility = View.GONE
         }
