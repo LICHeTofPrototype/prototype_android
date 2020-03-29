@@ -43,8 +43,8 @@ android {
             //localhostへのアクセスの場合ここを変更する
             //[not permitted by network security policy]のエラーが出て通信できない場合は
             //network_security_configへのドメイン記載も行う
-            buildConfigField "String", "API_ROOT", "\"http://24d43ba2.ngrok.io/\""
-            buildConfigField "String", "DOMAIN", "\"http://24d43ba2.ngrok.io\""
+            buildConfigField "String", "API_ROOT", "\"http://192.168.2.119:8080/\""
+            buildConfigField "String", "DOMAIN", "\"http://127.0.0.1:8000\""
         }
 
         prd {
@@ -124,6 +124,8 @@ dependencies {
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    //MPAndroidChart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
 
 subprojects {

@@ -2,8 +2,9 @@ package com.example.lichet.api
 
 import android.util.Log
 import com.example.lichet.R
+import com.example.lichet.api.request.HeartBeatRequest
 import com.example.lichet.api.response.ErrorResponse
-import com.example.lichet.api.response.HeartBeat
+import com.example.lichet.api.response.HeartBeatResponse
 import com.squareup.moshi.Moshi
 import io.reactivex.Single
 import retrofit2.HttpException
@@ -29,8 +30,8 @@ open class Client @Inject constructor(val service: Service,
     /**
      * テスト
      */
-    fun getHearBeats(userId: Int, measurementId: Int, requestIndex: Int): Single<List<HeartBeat>>{
-        return service.getHearBeats(userId, measurementId, requestIndex)
+    fun getHearBeats(heartBeatRequest: HeartBeatRequest): Single<List<HeartBeatResponse>>{
+        return service.getHearBeats(heartBeatRequest)
             .subscribeOn(schedulerProvider.io())
             .handleException()
     }
