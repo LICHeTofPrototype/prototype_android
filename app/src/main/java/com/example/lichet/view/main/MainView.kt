@@ -26,7 +26,7 @@ interface MainView {
     fun showProgress()
     fun hideProgress()
     fun showToast(toastMessage: String)
-    fun relpaceFragment(listHeartBeatResponse: List<HeartBeatResponse>)
+    fun relpaceFragment(pnnData: HeartBeatResponse)
 
     class MainActivity : BaseActivity(), MainView {
 
@@ -85,8 +85,8 @@ interface MainView {
             spinner.adapter = spinnerAdapter
         }
 
-        override fun relpaceFragment(listHeartBeatResponse: List<HeartBeatResponse>){
-            val fragment = MainFragment().newInstance(listHeartBeatResponse)
+        override fun relpaceFragment(pnnData: HeartBeatResponse){
+            val fragment = MainFragment().newInstance(pnnData)
             val fragmentManager = supportFragmentManager
             val trasnaction = fragmentManager.beginTransaction()
             trasnaction.replace(R.id.heartBeatFragment, fragment, TAG_BACK_PRESSED).commit()

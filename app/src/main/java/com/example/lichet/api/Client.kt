@@ -30,7 +30,7 @@ open class Client @Inject constructor(val service: Service,
     /**
      * テスト
      */
-    fun getHearBeats(heartBeatRequest: HeartBeatRequest): Single<List<HeartBeatResponse>>{
+    fun getHearBeats(heartBeatRequest: HeartBeatRequest): Single<HeartBeatResponse>{
         return service.getHearBeats(heartBeatRequest)
             .subscribeOn(schedulerProvider.io())
             .handleException()

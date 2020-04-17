@@ -11,7 +11,7 @@ interface Service {
      * requestIndexで指定したレコード以降のデータをリストで受け取る
      */
     @POST("v1/api/get_data/pnn/")
-    fun getHearBeats(@Body heartBeatRequest: HeartBeatRequest): Single<List<HeartBeatResponse>>
+    fun getHearBeats(@Body heartBeatRequest: HeartBeatRequest): Single<HeartBeatResponse>
 //
 //    /**
 //     * PORTへのログイン(company_user)

@@ -43,7 +43,7 @@ android {
             //localhostへのアクセスの場合ここを変更する
             //[not permitted by network security policy]のエラーが出て通信できない場合は
             //network_security_configへのドメイン記載も行う
-            buildConfigField "String", "API_ROOT", "\"http://192.168.2.119:8080/\""
+            buildConfigField "String", "API_ROOT", "\"http://192.168.2.124:8000/\""
             buildConfigField "String", "DOMAIN", "\"http://127.0.0.1:8000\""
         }
 

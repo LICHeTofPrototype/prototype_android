@@ -20,13 +20,13 @@ import kotlinx.android.synthetic.main.fragment_heart_beat.*
 
 class MainFragment: Fragment(), MainView.MainActivity.OnBackKeyPressedListener {
 
-    private var listHeartBeatResponse: List<HeartBeatResponse>? = null
+    private var pnnData: HeartBeatResponse? = null
 
     // スタイルとフォントファミリーの設定
     private var mTypeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
 
-    fun newInstance(listHeartBeatResponse: List<HeartBeatResponse>): MainFragment{
-        this.listHeartBeatResponse = listHeartBeatResponse
+    fun newInstance(pnnData: HeartBeatResponse): MainFragment{
+        this.pnnData = pnnData
         return this
     }
 
@@ -40,7 +40,7 @@ class MainFragment: Fragment(), MainView.MainActivity.OnBackKeyPressedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listHeartBeatResponse?: return
+        pnnData?: return
 
         setupLineChart()
 
@@ -93,12 +93,9 @@ class MainFragment: Fragment(), MainView.MainActivity.OnBackKeyPressedListener {
 
     private fun lineData(): LineData {
         val values = mutableListOf<Entry>()
-
-        listHeartBeatResponse?.forEachIndexed { index, heartBeat ->
-//            val time = heartBeat.pnn_time.toFloat()
-            val time = index*10.toFloat()
-            val pnn = heartBeat.pnn_data?.toFloat()?: 0f
-            values.add(Entry(time, pnn))
+        val pnnArray = pnnData?.pnn_data?.split(",")
+        pnnArray?.forEachIndexed{index, pnn ->
+            values.add(Entry(index*10.toFloat(), pnn.toFloat()))
         }
         val yValue = LineDataSet(values, getString(R.string.chart_heart_beat)).apply {
             axisDependency =  YAxis.AxisDependency.LEFT
@@ -110,7 +107,7 @@ class MainFragment: Fragment(), MainView.MainActivity.OnBackKeyPressedListener {
             // 点の値非表示
             setDrawValues(false)
             // 線の太さ
-            lineWidth = 2f
+            lineWidth = 1f
         }
         return LineData(yValue)
     }

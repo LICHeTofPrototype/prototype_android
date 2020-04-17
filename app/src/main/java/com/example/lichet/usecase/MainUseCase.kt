@@ -18,7 +18,7 @@ class MainUseCase @Inject constructor(
     private val schedulerProvider: SchedulerProvider,
     private val context: Context){
 
-    fun getHeartBeats(heartBeatRequest: HeartBeatRequest): Single<List<HeartBeatResponse>> {
+    fun getHeartBeats(heartBeatRequest: HeartBeatRequest): Single<HeartBeatResponse> {
         return apiClient.getHearBeats(heartBeatRequest)
     }
 }

@@ -44,16 +44,12 @@ class MainPresenter  @Inject constructor(
 
     private fun getHeartBeats(requestIndex: Int){
         val view = view?:return
-        useCase.getHeartBeats(HeartBeatRequest(13, requestIndex))
+        useCase.getHeartBeats(HeartBeatRequest(2, requestIndex))
             .doOnSubscribe { view.showProgress() }
             .observeOn(schedulerProvider.ui())
             .subscribe({heartBeats ->
                 view.hideProgress()
-                view.showToast("結果をLogに出力")
-                heartBeats.forEach {heartBeat ->
-                    Log.i(TAG, heartBeat.pnn_time.toString())
-                    Log.i(TAG, (heartBeat.pnn_data?:"null").toString())
-                }
+                view.showToast("success")
 
                 view.relpaceFragment(heartBeats)
 
